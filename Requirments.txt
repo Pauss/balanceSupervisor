@@ -1,0 +1,11 @@
+===========Supervisor==========
+- balance simulator (salary will be supplied every month)
+- list of costs ordered by categories
+- rent maintenance 
+- estimation of costs VS real costs (charts , raports)
+- login (cookies sesions)
+- migrate pictures of bills from google cloud photos (optional)
+- things to do and done things
+- economy scenarios
+- vacantion planning
+
