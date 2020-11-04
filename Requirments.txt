@@ -9,3 +9,7 @@
 - economy scenarios
 - vacantion planning
 
+===========SupervisorSimplified==========
+- dashboard with current costs(per category)
+- log cost 
+- authentification
