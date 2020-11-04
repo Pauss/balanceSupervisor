@@ -12,4 +12,4 @@
 ===========SupervisorSimplified==========
 - dashboard with current costs(per category)
 - log cost 
-- authentification
+- authentication

@@ -1,9 +1,12 @@
-import { mongoose } from '../conection.js'
+import Joi from 'joi'
+import { mongoose } from '../connection.js'
 
 const logSchema = new mongoose.Schema({
   label: {
     type: String,
-    required: true
+    required: true,
+    min: 3,
+    max: 50
   },
   cost: {
     type: Number,
@@ -11,11 +14,20 @@ const logSchema = new mongoose.Schema({
   },
   created: { type: Date, default: Date.now },
   userID: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }
 })
 
 const LogCost = mongoose.model('LogCost', logSchema)
 
-export { LogCost }
+function validateLog(logCost) {
+  const schema = {
+    label: Joi.string().min(5).max(50).required(),
+    cost: Joi.Number().required()
+  }
+
+  return Joi.validate(logCost, schema)
+}
+
+export { LogCost, validateLog as validate }

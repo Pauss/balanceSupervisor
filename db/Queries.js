@@ -1,22 +1,19 @@
 import { User } from './models/User.js'
 import { LogCost } from './models/LogCost.js'
 import Debug from 'debug'
+import bcrypt from 'bcrypt'
 
 const debug = Debug('db-queries')
 
 class Queries {
   async createUser(userInput) {
     try {
-      const res = await User.find({ name: userInput })
+      const newUser = new User(userInput)
 
-      if (res.length) {
-        const newUser = new User(userInput)
+      const salt = await bcrypt.genSalt(10)
+      newUser.password = await bcrypt.hash(newUser.password, salt)
 
-        await newUser.save()
-        return true
-      }
-
-      return false
+      await newUser.save()
     } catch (err) {
       debug('Error when creating new user.')
     }
