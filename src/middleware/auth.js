@@ -13,4 +13,4 @@ function auth(req, res, next) {
   }
 }
 
-export { auth as authMiddleWare }
+export { auth }

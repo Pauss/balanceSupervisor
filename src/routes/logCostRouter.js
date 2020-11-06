@@ -1,9 +1,9 @@
 import express from 'express'
-import { authMiddleWare } from '../middleware/auth.js'
+import { auth } from '../middleware/auth.js'
 
 let router = express.Router()
 
-router.get('/', authMiddleWare, (req, res) => {
+router.get('/', auth, (req, res) => {
   res.send('Log Costs')
 })
 
