@@ -11,6 +11,11 @@ import { Layout } from 'antd'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 
+const contentLayout = {
+  padding: '50px',
+  marginTop: '64px'
+}
+
 function App() {
   return (
     <div className="App">
@@ -18,7 +23,7 @@ function App() {
         <Router>
           <Header />
           {/* <Content> */}
-          <Layout.Content className="content" style={{ padding: ' 50px', marginTop: 64 }}>
+          <Layout.Content className="content" style={contentLayout}>
             <div>
               <Switch>
                 <Route path="/" exact component={Home} />

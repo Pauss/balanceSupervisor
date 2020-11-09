@@ -61,4 +61,5 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
   margin-bottom: 5%;
+  position: relative;
 }

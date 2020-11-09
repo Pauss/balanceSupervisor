@@ -12,7 +12,8 @@ const layout = {
 const tailLayout = {
   wrapperCol: {
     offset: 8,
-    span: 16
+    span: 16,
+    flex: 'auto'
   }
 }
 
@@ -32,6 +33,7 @@ function Login() {
       initialValues={{
         remember: true
       }}
+      style={{ position: 'relative' }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
