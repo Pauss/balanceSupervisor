@@ -1,9 +1,10 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 import axios from 'axios'
 import { Form, Input, Button, Checkbox } from 'antd'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { useUser } from '../userContext'
+import {} from 'dotenv/config.js'
 
 const layout = {
   labelCol: {
@@ -29,7 +30,9 @@ function Login() {
   async function onFinish(values) {
     try {
       const { email, password } = values
-      const response = await axios.post('http://localhost:4000/api/auth', { email, password })
+
+      const URL = 'http://192.168.100.15:4000/api/auth'
+      const response = await axios.post(URL, { email, password })
 
       const user = {
         email: email,
