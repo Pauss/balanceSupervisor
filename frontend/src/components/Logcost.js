@@ -19,7 +19,7 @@ function Logcost() {
     <>
       <div className="site-card-wrapper">
         <Col span={32}>
-          <Card title="Tell me...on what you spend money this time?" bordered={false}>
+          <Card title="On what you spend money this time?" bordered={false}>
             <Col span={32}>
               <InputNumber
                 defaultValue={0}

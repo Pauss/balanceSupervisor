@@ -28,7 +28,8 @@ function Register() {
   async function onFinish(values) {
     try {
       const { name, email, password } = values
-      const response = await axios.post('http://localhost:4000/api/users', { name, email, password })
+      const URL = 'http://192.168.100.15:4000/api/users'
+      const response = await axios.post(URL, { name, email, password })
       setToLogin(true)
     } catch (err) {
       console.log('Error when trying to Register', err)
