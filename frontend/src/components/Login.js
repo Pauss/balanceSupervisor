@@ -1,5 +1,9 @@
-import React from 'react'
+import React, { useReducer } from 'react'
+import axios from 'axios'
 import { Form, Input, Button, Checkbox } from 'antd'
+import { useState, useEffect } from 'react'
+import { Redirect } from 'react-router-dom'
+import { useUser } from '../userContext'
 
 const layout = {
   labelCol: {
@@ -18,61 +22,86 @@ const tailLayout = {
 }
 
 function Login() {
-  const onFinish = (values) => {
-    console.log('Success:', values)
+  const { login, isAuthenticated } = useUser()
+  const [toDashboard, setToDashboard] = useState(false)
+  const [error, setError] = useState(false)
+
+  async function onFinish(values) {
+    try {
+      const { email, password } = values
+      const response = await axios.post('http://localhost:4000/api/auth', { email, password })
+
+      const user = {
+        email: email,
+        token: response.headers['x-auth-token'],
+        remember: values.remember
+      }
+
+      login(user)
+      console.log('isAuth: ', isAuthenticated)
+      setToDashboard(true)
+    } catch (err) {
+      console.log('Error when trying to Login', err)
+      setError(true)
+    }
   }
 
-  const onFinishFailed = (errorInfo) => {
+  function onFinishFailed(errorInfo) {
     console.log('Failed:', errorInfo)
+    setError(true)
   }
 
   return (
-    <Form
-      {...layout}
-      name="basic"
-      initialValues={{
-        remember: true
-      }}
-      style={{ position: 'relative' }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-    >
-      <Form.Item
-        label="Username"
-        name="username"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your username!'
-          }
-        ]}
+    <>
+      <Form
+        {...layout}
+        name="basic"
+        initialValues={{
+          remember: true
+        }}
+        style={{ position: 'relative' }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
       >
-        <Input />
-      </Form.Item>
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your email!'
+            }
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-      <Form.Item
-        label="Password"
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!'
-          }
-        ]}
-      >
-        <Input.Password />
-      </Form.Item>
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your password!'
+            }
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
 
-      <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-        <Checkbox>Remember me</Checkbox>
-      </Form.Item>
+        <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+          <Checkbox>Remember me</Checkbox>
+        </Form.Item>
 
-      <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+        <Form.Item {...tailLayout}>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+      {toDashboard ? <Redirect to="/dashboard" /> : null}
+      {error ? <p style={{ color: 'red' }}> Login Failed. Please try again. </p> : ''}
+    </>
   )
 }
 

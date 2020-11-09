@@ -4,6 +4,7 @@ import Debug from 'debug'
 import { logCostRouter } from './src/routes/logCostRouter.js'
 import { userRouter } from './src/routes/userRouter.js'
 import { authRouter } from './src/routes/auth.js'
+import cors from 'cors'
 const app = express()
 
 const port = process.env.PORT || 3000
@@ -12,6 +13,7 @@ const debug = Debug('root')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cors({ exposedHeaders: '*' }))
 
 app.get('/', (req, res) => {
   res.send('Hello to balanceSupervisor')
