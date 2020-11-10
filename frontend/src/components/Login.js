@@ -3,9 +3,9 @@ import axios from 'axios'
 import { Form, Input, Button, Checkbox } from 'antd'
 import { useState } from 'react'
 import { Redirect } from 'react-router-dom'
-import { useUser } from '../userContext'
+import { useUser } from '../utils/userContext.js'
 import {} from 'dotenv/config.js'
-import URLs from '../valid_url'
+import URLs from '../utils/valid_url'
 
 const layout = {
   labelCol: {

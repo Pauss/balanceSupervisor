@@ -11,7 +11,7 @@ import { Layout } from 'antd'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
-import { UserProvider, useUser } from './userContext'
+import { UserProvider, useUser } from './utils/userContext.js'
 
 const contentLayout = {
   padding: '50px',

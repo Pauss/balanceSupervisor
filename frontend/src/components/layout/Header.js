@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Layout, Menu } from 'antd'
 import '../../App.css'
 import { Link, BrowserRouter as Redirect } from 'react-router-dom'
-import { useUser } from '../../userContext'
+import { useUser } from '../../utils/userContext.js'
 const rightStyle = { float: 'right' }
 
 export default function Header() {

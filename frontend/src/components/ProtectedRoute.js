@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Route, Redirect } from 'react-router-dom'
-import { useUser } from '../userContext'
+import { useUser } from '../utils/userContext.js'
 
 export default function ProtectedRoute({ component: Component, ...rest }) {
   const { isAuthenticated } = useUser()

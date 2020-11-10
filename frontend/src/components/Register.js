@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Form, Input, Button, Checkbox } from 'antd'
 import { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
-import URLs from '../valid_url'
+import URLs from '../utils/valid_url.js'
 
 const layout = {
   labelCol: {

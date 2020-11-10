@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Card, Col, InputNumber, Radio, Button, message } from 'antd'
 import '../App.css'
 import axios from 'axios'
-import URLs from '../valid_url.js'
-import { useUser } from '../userContext'
+import URLs from '../utils/valid_url.js'
+import { useUser } from '../utils/userContext.js'
 import logCostImage from '../images/logCost.jpg'
 
 function Logcost(props) {
