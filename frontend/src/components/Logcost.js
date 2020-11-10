@@ -4,6 +4,7 @@ import '../App.css'
 import axios from 'axios'
 import URLs from '../valid_url.js'
 import { useUser } from '../userContext'
+import logCostImage from '../images/logCost.jpg'
 
 function Logcost(props) {
   const [radioVal, setRadioVal] = useState('')
@@ -58,7 +59,12 @@ function Logcost(props) {
     <>
       <div className="site-card-wrapper">
         <Col span={26}>
-          <Card headStyle={{ fontSize: '200%' }} className="wordWrap" title="On what did you spend money this time?" bordered={false}>
+          <Card
+            headStyle={{ fontSize: '200%' }}
+            title="On what did you spend money this time?"
+            bordered={false}
+            cover={<img className="imageLog" alt="example" src={logCostImage} />}
+          >
             <Col span={26}>
               <InputNumber
                 defaultValue={0}
