@@ -22,12 +22,13 @@ const logSchema = new mongoose.Schema({
 const LogCost = mongoose.model('LogCost', logSchema)
 
 function validateLog(logCost) {
-  const schema = {
-    label: Joi.string().min(5).max(50).required(),
-    cost: Joi.Number().required()
-  }
+  const schema = Joi.object({
+    label: Joi.string().min(3).max(50).required(),
+    cost: Joi.number().required(),
+    userID: Joi.required()
+  })
 
-  return Joi.validate(logCost, schema)
+  return schema.validate(logCost)
 }
 
 export { LogCost, validateLog as validate }

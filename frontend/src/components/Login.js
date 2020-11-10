@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { useUser } from '../userContext'
 import {} from 'dotenv/config.js'
+import URLs from '../valid_url'
 
 const layout = {
   labelCol: {
@@ -30,13 +31,12 @@ function Login() {
   async function onFinish(values) {
     try {
       const { email, password } = values
-
-      const URL = 'http://192.168.100.15:4000/api/auth'
-      const response = await axios.post(URL, { email, password })
+      const response = await axios.post(URLs.login, { email, password })
 
       const user = {
-        email: email,
+        email: response.data.email,
         token: response.headers['x-auth-token'],
+        _id: response.data._id,
         remember: values.remember
       }
 

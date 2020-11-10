@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { useUser } from '../userContext'
 
@@ -9,7 +9,7 @@ export default function ProtectedRoute({ component: Component, ...rest }) {
     <Route
       {...rest}
       render={(props) => {
-        if (isAuthenticated) {
+        if (isAuthenticated === true) {
           return <Component {...props} />
         } else {
           return (

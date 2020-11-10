@@ -27,19 +27,15 @@ export default function Header() {
         <Layout.Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
             <Menu.Item key="1">
-              <Link to="/dashboard">
-                <li>Dashboard</li>
-              </Link>
+              <Link to="/dashboard">Dashboard</Link>
             </Menu.Item>
             <Menu.Item key="2">
-              <Link to="/logcost">
-                <li>Logcost</li>
-              </Link>
+              <Link to="/logcost">Logcost</Link>
             </Menu.Item>
 
             <Menu.Item key="3" style={rightStyle}>
               <Link to="/" onClick={onClick}>
-                <li>Logout</li>
+                Logout
               </Link>
             </Menu.Item>
           </Menu>

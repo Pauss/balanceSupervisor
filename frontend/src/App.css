@@ -63,3 +63,8 @@
   margin-bottom: 5%;
   position: relative;
 }
+
+.ant-card-head-title {
+  display: block;
+  white-space: normal;
+}

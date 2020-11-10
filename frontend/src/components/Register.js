@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Form, Input, Button, Checkbox } from 'antd'
 import { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
-import { useUser } from '../userContext'
+import URLs from '../valid_url'
 
 const layout = {
   labelCol: {
@@ -28,8 +28,7 @@ function Register() {
   async function onFinish(values) {
     try {
       const { name, email, password } = values
-      const URL = 'http://192.168.100.15:4000/api/users'
-      const response = await axios.post(URL, { name, email, password })
+      const response = await axios.post(URLs.register, { name, email, password })
       setToLogin(true)
     } catch (err) {
       console.log('Error when trying to Register', err)

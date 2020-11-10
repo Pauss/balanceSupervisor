@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
-import { Card, Col, InputNumber, Radio, Space } from 'antd'
+import { Card, Col, InputNumber, Radio, Button, message } from 'antd'
+import '../App.css'
+import axios from 'axios'
+import URLs from '../valid_url.js'
+import { useUser } from '../userContext'
 
-function Logcost() {
+function Logcost(props) {
   const [radioVal, setRadioVal] = useState('')
   const [cost, setCost] = useState(0)
+  const { user } = useUser()
 
   const labels = ['food', 'house-bills', 'car-diesel', 'medicines', 'clothes', 'others']
 
@@ -15,12 +20,46 @@ function Logcost() {
   function onChange(value) {
     setCost(value)
   }
+
+  const success = () => {
+    message.success('This is a success message')
+  }
+
+  const failure = (err) => {
+    message.error(err)
+  }
+
+  const warning = () => {
+    message.warning('Incomplete data!')
+  }
+
+  async function onLog(e) {
+    e.preventDefault()
+
+    const message = { label: radioVal, cost: cost, userID: user._id }
+    if (radioVal && cost > 0) {
+      try {
+        const response = await axios.post(URLs.logCost, message, {
+          headers: {
+            'x-auth-token': `${user.token}`
+          }
+        })
+
+        success()
+        window.location = props.location.pathname
+      } catch (err) {
+        failure(err.message)
+        window.location = props.location.pathname
+      }
+    } else warning()
+  }
+
   return (
     <>
       <div className="site-card-wrapper">
-        <Col span={32}>
-          <Card title="On what you spend money this time?" bordered={false}>
-            <Col span={32}>
+        <Col span={26}>
+          <Card headStyle={{ fontSize: '200%' }} className="wordWrap" title="On what did you spend money this time?" bordered={false}>
+            <Col span={26}>
               <InputNumber
                 defaultValue={0}
                 formatter={(value) => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
@@ -32,17 +71,26 @@ function Logcost() {
 
             <br />
             <br />
-            <Col span={32}>
-              <Radio.Group onChange={onSelect} value={radioVal}>
-                {labels.map((label) => {
-                  return <Radio value={label}> {label}</Radio>
+            <Col span={26}>
+              <Radio.Group onChange={onSelect} value={radioVal} size="large">
+                {labels.map((label, index) => {
+                  return (
+                    <Radio style={{ fontSize: '200' }} value={label} key={index}>
+                      {' '}
+                      {label}
+                    </Radio>
+                  )
                 })}
               </Radio.Group>
             </Col>
+            <br />
+            <br />
+            <Button type="primary" shape="round" size="large" onClick={onLog}>
+              Click to log cost
+            </Button>
           </Card>
         </Col>
       </div>
-      ,
     </>
   )
 }

@@ -11,8 +11,21 @@ export function UserProvider({ children }) {
     previouslyAuth()
   }, [])
 
-  const [user, setUser] = useState({})
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  let init_condition = false
+  let init_user = {}
+
+  function initVals() {
+    const loggedInUser = localStorage.getItem('user')
+    if (loggedInUser) {
+      const init_user = JSON.parse(loggedInUser)
+      init_condition = true
+    }
+  }
+
+  initVals()
+
+  const [user, setUser] = useState({ init_user })
+  const [isAuthenticated, setIsAuthenticated] = useState(init_condition)
 
   const contextValues = {
     user,
