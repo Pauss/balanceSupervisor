@@ -4,9 +4,7 @@ import { mongoose } from '../connection.js'
 const logSchema = new mongoose.Schema({
   label: {
     type: String,
-    required: true,
-    min: 3,
-    max: 50
+    required: true
   },
   cost: {
     type: Number,
@@ -20,10 +18,11 @@ const logSchema = new mongoose.Schema({
 })
 
 const LogCost = mongoose.model('LogCost', logSchema)
+const labels = ['food', 'house-bills', 'car-diesel', 'medicines', 'clothes', 'others']
 
 function validateLog(logCost) {
   const schema = Joi.object({
-    label: Joi.string().min(3).max(50).required(),
+    label: Joi.any().valid('food', 'house-bills', 'car-diesel', 'medicines', 'clothes', 'others').required(),
     cost: Joi.number().required(),
     userID: Joi.required()
   })
@@ -31,4 +30,4 @@ function validateLog(logCost) {
   return schema.validate(logCost)
 }
 
-export { LogCost, validateLog as validate }
+export { LogCost, validateLog as validate, labels }

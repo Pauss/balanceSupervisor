@@ -28,6 +28,18 @@ class Queries {
       debug('Error when creating new logCost.')
     }
   }
+
+  async getCurrentMonthLogs(label) {
+    let currentDate = new Date()
+    let month = currentDate.getMonth()
+    let year = currentDate.getFullYear()
+
+    let startDate = new Date(year, month, 1, 0, 0, 0)
+
+    let result = await LogCost.find({ label: label, created: { $gte: startDate, $lte: currentDate } })
+
+    return result
+  }
 }
 
 let queries = new Queries()
