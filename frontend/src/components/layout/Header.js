@@ -25,15 +25,18 @@ export default function Header() {
     return (
       <>
         <Layout.Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
+          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['']}>
             <Menu.Item key="1">
               <Link to="/dashboard">Dashboard</Link>
             </Menu.Item>
             <Menu.Item key="2">
               <Link to="/logcost">Logcost</Link>
             </Menu.Item>
+            <Menu.Item key="3">
+              <Link to="/logs-history">Logs History</Link>
+            </Menu.Item>
 
-            <Menu.Item key="3" style={rightStyle}>
+            <Menu.Item key="4" style={rightStyle}>
               <Link to="/" onClick={onClick}>
                 Logout
               </Link>
@@ -46,7 +49,7 @@ export default function Header() {
   else
     return (
       <Layout.Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
+        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['']}>
           <Menu.Item key="1">
             <Link to="/">
               <li>Home</li>

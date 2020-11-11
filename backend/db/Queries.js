@@ -40,6 +40,12 @@ class Queries {
 
     return result
   }
+
+  async getAllLogs(label, skip) {
+    let result = await LogCost.find({}).sort({ created: -1 }).limit(20).skip(0)
+
+    return result
+  }
 }
 
 let queries = new Queries()

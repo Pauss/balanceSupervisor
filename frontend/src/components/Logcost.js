@@ -29,7 +29,7 @@ function Logcost(props) {
     const message = { label: radioVal, cost: cost, userID: user._id }
     if (radioVal && cost > 0) {
       try {
-        const response = await axios.post(URLs.logCost, message, {
+        await axios.post(URLs.logCost, message, {
           headers: {
             'x-auth-token': `${user.token}`
           }
@@ -52,7 +52,7 @@ function Logcost(props) {
             headStyle={{ fontSize: '200%' }}
             title="On what did you spend money this time?"
             bordered={false}
-            cover={<img className="imageLog" alt="example" src={logCostImage} />}
+            //cover={<img className="imageLog" alt="example" src={logCostImage} />}
           >
             <Col span={26}>
               <InputNumber

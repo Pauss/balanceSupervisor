@@ -3,44 +3,15 @@ import { List, Avatar, Divider, Col, Card } from 'antd'
 import '../App.css'
 import axios from 'axios'
 import URLs from '../utils/valid_url.js'
-import { success, failure, warning } from '../utils/popup_messages.js'
+import { failure } from '../utils/popup_messages.js'
 import { useUser } from '../utils/userContext.js'
-
-const data = [
-  {
-    title: 'Food',
-    code: '127829'
-  },
-  {
-    title: 'House-bills',
-    code: '127968'
-  },
-  {
-    title: 'Car-diesel',
-    code: '128663'
-  },
-  {
-    title: 'Medicines',
-    code: '129298'
-  },
-  {
-    title: 'Clothes',
-    code: '128085'
-  },
-  {
-    title: 'Others',
-    code: '129300'
-  }
-]
+import label_codes from '../utils/label_codes.js'
 
 function Dashboard() {
   const [totalCost, setTotalCost] = useState([])
-  const { user, initVals, isAuthenticated } = useUser()
+  const { user } = useUser()
 
-  console.log('user: ', user)
-  console.log('Dashboard, isAuth: ', isAuthenticated)
-
-  useEffect(async () => {
+  useEffect(() => {
     getDashboard()
   }, [])
 
@@ -67,7 +38,7 @@ function Dashboard() {
           <Card>
             <List
               itemLayout="horizontal"
-              dataSource={data}
+              dataSource={label_codes}
               size="large"
               renderItem={(item, index) => (
                 <div className="itemList">

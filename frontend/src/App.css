@@ -111,3 +111,41 @@
     max-width: 80%;
   }
 }
+
+.itemList-history {
+  display: block;
+  max-width: 100%;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media only screen and (max-width: 2500px) and (min-width: 1500px) {
+  .itemList-history {
+    max-width: 40%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .itemList-history {
+    max-width: 100%;
+  }
+}
+
+.my_padding {
+  padding: 20px;
+}
+
+@media only screen and (max-width: 2500px) and (min-width: 1500px) {
+  .my_padding {
+    padding: 100px 300px 300px 300px;
+  }
+}
+
+.ant-card-body {
+  padding: 10px;
+}
+
+.ant-list-lg .ant-list-item {
+  padding: 10px 0px 0px 0px;
+}
