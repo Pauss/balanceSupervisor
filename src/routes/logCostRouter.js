@@ -40,8 +40,7 @@ router.get('/currentLogs', auth, async (req, res) => {
     result.forEach((log) => {
       totalCost += log.cost
     })
-
-    return { label: labels[index], total: totalCost }
+    return totalCost
   })
 
   res.send(total).status(200)

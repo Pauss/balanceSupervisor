@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Card, Col, InputNumber, Radio, Button, message } from 'antd'
+import { Card, Col, InputNumber, Radio, Button } from 'antd'
 import '../App.css'
 import axios from 'axios'
 import URLs from '../utils/valid_url.js'
 import { useUser } from '../utils/userContext.js'
 import logCostImage from '../images/logCost.jpg'
+import { success, failure, warning } from '../utils/popup_messages.js'
 
 function Logcost(props) {
   const [radioVal, setRadioVal] = useState('')
@@ -20,18 +21,6 @@ function Logcost(props) {
 
   function onChange(value) {
     setCost(value)
-  }
-
-  const success = () => {
-    message.success('This is a success message')
-  }
-
-  const failure = (err) => {
-    message.error(err)
-  }
-
-  const warning = () => {
-    message.warning('Incomplete data!')
   }
 
   async function onLog(e) {

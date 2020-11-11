@@ -17,14 +17,14 @@ export function UserProvider({ children }) {
   function initVals() {
     const loggedInUser = localStorage.getItem('user')
     if (loggedInUser) {
-      const init_user = JSON.parse(loggedInUser)
+      init_user = JSON.parse(loggedInUser)
       init_condition = true
     }
   }
 
   initVals()
 
-  const [user, setUser] = useState({ init_user })
+  const [user, setUser] = useState(init_user)
   const [isAuthenticated, setIsAuthenticated] = useState(init_condition)
 
   const contextValues = {
@@ -33,7 +33,8 @@ export function UserProvider({ children }) {
     setUser,
     login,
     logout,
-    previouslyAuth
+    previouslyAuth,
+    initVals
   }
 
   function login(user) {
