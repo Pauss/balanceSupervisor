@@ -41,8 +41,14 @@ class Queries {
     return result
   }
 
-  async getAllLogs(label, skip) {
-    let result = await LogCost.find({}).sort({ created: -1 }).limit(20).skip(0)
+  async getAllLogs(skip) {
+    let result = await LogCost.find({}).sort({ created: -1 }).limit(20).skip(skip)
+
+    return result
+  }
+
+  async getAllLogsCount(skip) {
+    let result = await LogCost.find({}).countDocuments()
 
     return result
   }

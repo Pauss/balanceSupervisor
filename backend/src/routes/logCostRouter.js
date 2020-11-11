@@ -46,12 +46,18 @@ router.get('/currentLogs', auth, async (req, res) => {
   res.send(total).status(200)
 })
 
-router.get('/history', auth, async (req, res) => {
-  const results = await queries.getAllLogs()
+router.post('/history', auth, async (req, res) => {
+  const results = await queries.getAllLogs(req.body.skip)
 
   if (!results) return res.status(500).send('Internal Server Error!')
 
-  res.send(results).status(200)
+  let count = await queries.getAllLogsCount()
+
+  if (!count) return res.status(500).send('Internal Server Error!')
+
+  count = Math.ceil(count / 20)
+
+  res.send({ results, count }).status(200)
 })
 
 export { router as logCostRouter }

@@ -55,7 +55,6 @@ function Dashboard() {
                         </Avatar>
                       }
                       title={<p style={{ fontSize: 'large' }}>{item.title}</p>}
-                      //title={<br />}
                       description={<p style={{ fontSize: 'large' }}>{totalCost[index]} RON</p>}
                     />
                   </List.Item>
