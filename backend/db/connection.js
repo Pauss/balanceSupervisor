@@ -17,7 +17,8 @@ try {
   await mongoose.connect(db_connect.url_db, db_connect.params)
   debug('Connected to MongoDB...')
 } catch (err) {
-  debug('Could not connect to MongoDB...')
+  debug('Could not connect to MongoDB...', err.messsage)
+  debug(`connectionURL: ${db_connect.url_db}`)
 }
 
 export { mongoose }
