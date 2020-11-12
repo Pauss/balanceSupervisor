@@ -19,11 +19,13 @@ const contentLayout = {
   marginTop: '64px'
 }
 
+const name = process.env.NODE_ENV === 'production' ? '/balance-supervisor' : ''
+
 function App() {
   return (
     <div className="App">
       <Layout>
-        <Router>
+        <Router basename={name}>
           <UserProvider>
             <Header />
             <Layout.Content className="content my_padding" style={contentLayout}>
