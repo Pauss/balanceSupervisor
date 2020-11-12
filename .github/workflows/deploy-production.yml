@@ -15,7 +15,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       #- uses: actions/checkout@v2
-      - name: connecting to server with sssh
+      - name: connecting to server with ssh
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_SERVER }}
@@ -24,5 +24,6 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           script: |
             cd ~/projects/github/balanceSupervisor
+            git pull origin master
             ./scripts/deploy.sh
             pwd

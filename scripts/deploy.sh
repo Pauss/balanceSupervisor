@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # before deploy
-git pull
 git status
 sudo service nginx stop
 
