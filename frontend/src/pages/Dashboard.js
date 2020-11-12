@@ -62,7 +62,7 @@ function Dashboard() {
               }}
             >
               {' '}
-              Spendings from this month until today...
+              Spendings of this month until today...
             </p>
             <List
               itemLayout="horizontal"
