@@ -36,13 +36,16 @@ class Queries {
 
     let startDate = new Date(year, month, 1, 0, 0, 0)
 
-    let result = await LogCost.find({ label: label, created: { $gte: startDate, $lte: currentDate } })
+    let result = await LogCost.find({ label: label, created: { $gte: startDate, $lte: currentDate } }).populate({
+      path: 'userID',
+      select: 'name'
+    })
 
     return result
   }
 
   async getAllLogs(skip) {
-    let result = await LogCost.find({}).sort({ created: -1 }).limit(20).skip(skip)
+    let result = await LogCost.find({}).sort({ created: -1 }).limit(20).skip(skip).populate({ path: 'userID', select: 'name' })
 
     return result
   }

@@ -6,6 +6,8 @@ import URLs from '../utils/valid_url.js'
 import { failure } from '../utils/popup_messages.js'
 import { useUser } from '../utils/userContext.js'
 import labels_codes from '../utils/label_codes.js'
+import Description from './Description'
+import { mapSymbols_array } from '../utils/obj_manipulation.js'
 
 function LogsHistory() {
   const [history, setHistory] = useState([])
@@ -17,8 +19,11 @@ function LogsHistory() {
     console.log('totalPages before get', totalPages)
     ;(async function anyNameFunction() {
       const res = await getHistory(0)
-      mapSymbols(res.results)
+      //prepare data
+      mapSymbols_array(res.results)
       setTotalPages(res.count)
+
+      //set data
       setHistory(res.results)
     })()
   }, [])
@@ -53,14 +58,6 @@ function LogsHistory() {
     setHistory(res.results)
   }
 
-  function mapSymbols(array) {
-    array.map((result) => {
-      const element = labels_codes.find((obj) => obj.title.toLowerCase() === result.label)
-
-      result.code = element.code
-    })
-  }
-
   return (
     <>
       <div></div>
@@ -76,26 +73,7 @@ function LogsHistory() {
                   {index ? <Divider /> : null}
 
                   <List.Item>
-                    <List.Item.Meta
-                      description={
-                        <>
-                          <div style={{ display: 'inline', fontSize: 'medium' }}>{new Date(item.created).toUTCString()}</div>
-                          {/* <div style={{ display: 'inline', fontSize: 'medium', textTransform: 'capitalize' }}> {item.label}</div> */}
-                          <span style={{ fontSize: '2em', color: 'rgba(0,0,0,0.8)' }}>{String.fromCodePoint(item.code)}</span>
-
-                          <div
-                            style={{
-                              display: 'inline',
-                              fontSize: 'large',
-                              color: 'rgb(199, 21, 133)'
-                            }}
-                          >
-                            {'   '}
-                            {item.cost} RON
-                          </div>
-                        </>
-                      }
-                    />
+                    <List.Item.Meta description={<Description item={item} code={item.code} />} />
                   </List.Item>
                 </div>
               )}

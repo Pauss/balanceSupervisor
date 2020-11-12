@@ -6,13 +6,28 @@ import URLs from '../utils/valid_url.js'
 import { failure } from '../utils/popup_messages.js'
 import { useUser } from '../utils/userContext.js'
 import label_codes from '../utils/label_codes.js'
+import { setTotal, mapSymbols_obj } from '../utils/obj_manipulation.js'
+import DropDown from './DropDown'
 
 function Dashboard() {
-  const [totalCost, setTotalCost] = useState([])
+  const [dashboardData, setDashboardData] = useState([])
   const { user } = useUser()
 
   useEffect(() => {
-    getDashboard()
+    ;(async function anyNameFunction() {
+      const res = await getDashboard()
+
+      console.log('res: ', res)
+
+      //prepare data
+      setTotal(res)
+      mapSymbols_obj(res)
+
+      console.log('res after: ', res)
+
+      //save data
+      setDashboardData(res)
+    })()
   }, [])
 
   async function getDashboard() {
@@ -22,10 +37,7 @@ function Dashboard() {
           'x-auth-token': `${user.token}`
         }
       })
-
-      setTotalCost(response.data)
-
-      console.log('totalCost', totalCost)
+      return response.data
     } catch (err) {
       failure(err.message)
     }
@@ -38,7 +50,7 @@ function Dashboard() {
           <Card>
             <List
               itemLayout="horizontal"
-              dataSource={label_codes}
+              dataSource={dashboardData}
               size="large"
               renderItem={(item, index) => (
                 <div className="itemList">
@@ -54,8 +66,11 @@ function Dashboard() {
                           {String.fromCodePoint(item.code)}
                         </Avatar>
                       }
-                      title={<p style={{ fontSize: 'large' }}>{item.title}</p>}
-                      description={<p style={{ fontSize: 'large' }}>{totalCost[index]} RON</p>}
+                      title={
+                        // {/* <p style={{ fontSize: 'large', textTransform: 'capitalize' }}>{item[0].label} </p> */}
+                        <DropDown itemList={item} />
+                      }
+                      description={<p style={{ fontSize: 'large' }}>{item.totalCost} RON</p>}
                     />
                   </List.Item>
                 </div>

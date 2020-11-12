@@ -2,6 +2,7 @@ import express from 'express'
 import { auth } from '../middleware/auth.js'
 import { validate, LogCost, labels } from '../../db/models/LogCost.js'
 import { queries } from '../../db/Queries.js'
+import Joi from 'joi'
 
 let router = express.Router()
 
@@ -35,18 +36,17 @@ router.get('/currentLogs', auth, async (req, res) => {
 
   if (!results) return res.status(500).send('Internal Server Error!')
 
-  total = results.map((result, index) => {
-    let totalCost = 0
-    result.forEach((log) => {
-      totalCost += log.cost
-    })
-    return totalCost
-  })
-
-  res.send(total).status(200)
+  res.send(results).status(200)
 })
 
 router.post('/history', auth, async (req, res) => {
+  const schema = Joi.object({
+    skip: Joi.number().integer().min(0)
+  })
+
+  const result = schema.validate(req.body)
+  if (result.error) return res.status(400).send(result.error.details[0].message)
+
   const results = await queries.getAllLogs(req.body.skip)
 
   if (!results) return res.status(500).send('Internal Server Error!')
