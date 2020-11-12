@@ -4,7 +4,7 @@ const IP_DEV = '192.168.100.15'
 const PORT_DEV = '4000'
 const PORT_PROD = '80'
 
-const ADDRESS_PROD = 'http://cippau.go.ro:' + PORT_PROD + 'balance-supervisor/api'
+const ADDRESS_PROD = 'http://cippau.go.ro:' + PORT_PROD + '/balance-supervisor/api'
 const ADDRESS_DEV = 'http://' + IP_DEV + ':' + PORT_DEV
 
 const ADDRESS = process.env.NODE_ENV === 'production' ? ADDRESS_PROD : ADDRESS_DEV
