@@ -52,7 +52,7 @@ function LogsHistory() {
     const skip = page * 20 - 20
     const res = await getHistory(skip)
 
-    mapSymbols(res.results)
+    mapSymbols_array(res.results)
     setTotalPages(res.count)
     console.log(res.results[0])
     setHistory(res.results)
@@ -63,14 +63,14 @@ function LogsHistory() {
       <div></div>
       <div className="site-card-wrapper">
         <Col>
-          <Card>
+          <Card style={{ padding: '20px' }}>
             <List
               itemLayout="horizontal"
               dataSource={history}
               size="small"
               renderItem={(item, index) => (
                 <div className="itemList-history">
-                  {index ? <Divider /> : null}
+                  {index ? <Divider style={{ margin: '8px' }} /> : null}
 
                   <List.Item>
                     <List.Item.Meta description={<Description item={item} code={item.code} />} />
@@ -78,10 +78,10 @@ function LogsHistory() {
                 </div>
               )}
             />
+            <Pagination defaultPageSize="20" pageSize="20" onChange={onChange} defaultCurrent={page} total={totalPages * 20} />
           </Card>
         </Col>
       </div>
-      <Pagination defaultPageSize="20" pageSize="20" onChange={onChange} defaultCurrent={page} total={totalPages * 20} />
     </>
   )
 }

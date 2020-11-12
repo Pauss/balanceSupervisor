@@ -44,16 +44,33 @@ function Dashboard() {
 
   return (
     <>
+      <></>
       <div className="site-card-wrapper">
         <Col>
-          <Card>
+          <Card style={{ padding: '20px' }}>
+            <p
+              style={{
+                background: 'linear-gradient(to bottom left, #ff9933 0%, #cc3399 100%)',
+                fontSize: 'large',
+                letterSpacing: '3px',
+                fontWeight: 'bolder',
+                WebkitTextFillColor: 'transparent',
+                WebkitBackgroundClip: 'text',
+                display: 'inline',
+                fontStyle: 'oblique',
+                margin: '20px'
+              }}
+            >
+              {' '}
+              Spendings from this month until today...
+            </p>
             <List
               itemLayout="horizontal"
               dataSource={dashboardData}
               size="large"
               renderItem={(item, index) => (
                 <div className="itemList">
-                  {index ? <Divider /> : null}
+                  <Divider style={{ margin: '8px' }} />
                   <List.Item>
                     <List.Item.Meta
                       avatar={
