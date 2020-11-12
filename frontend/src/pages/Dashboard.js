@@ -5,9 +5,8 @@ import axios from 'axios'
 import URLs from '../utils/valid_url.js'
 import { failure } from '../utils/popup_messages.js'
 import { useUser } from '../utils/userContext.js'
-import label_codes from '../utils/label_codes.js'
 import { setTotal, mapSymbols_obj } from '../utils/obj_manipulation.js'
-import DropDown from './DropDown'
+import DropDown from '../components/DropDown'
 
 function Dashboard() {
   const [dashboardData, setDashboardData] = useState([])
@@ -66,10 +65,7 @@ function Dashboard() {
                           {String.fromCodePoint(item.code)}
                         </Avatar>
                       }
-                      title={
-                        // {/* <p style={{ fontSize: 'large', textTransform: 'capitalize' }}>{item[0].label} </p> */}
-                        <DropDown itemList={item} />
-                      }
+                      title={<DropDown itemList={item} />}
                       description={<p style={{ fontSize: 'large' }}>{item.totalCost} RON</p>}
                     />
                   </List.Item>

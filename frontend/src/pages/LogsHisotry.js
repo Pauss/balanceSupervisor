@@ -6,7 +6,7 @@ import URLs from '../utils/valid_url.js'
 import { failure } from '../utils/popup_messages.js'
 import { useUser } from '../utils/userContext.js'
 import labels_codes from '../utils/label_codes.js'
-import Description from './Description'
+import Description from '../components/Description'
 import { mapSymbols_array } from '../utils/obj_manipulation.js'
 
 function LogsHistory() {
