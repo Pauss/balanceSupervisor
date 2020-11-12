@@ -68,26 +68,29 @@ function Dashboard() {
               itemLayout="horizontal"
               dataSource={dashboardData}
               size="large"
-              renderItem={(item, index) => (
-                <div className="itemList">
-                  <Divider style={{ margin: '8px' }} />
-                  <List.Item>
-                    <List.Item.Meta
-                      avatar={
-                        <Avatar
-                          style={{ fontSize: '3em' }}
-                          size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-                          className="iconItems"
-                        >
-                          {String.fromCodePoint(item.code)}
-                        </Avatar>
-                      }
-                      title={<DropDown itemList={item} />}
-                      description={<p style={{ fontSize: 'large' }}>{item.totalCost} RON</p>}
-                    />
-                  </List.Item>
-                </div>
-              )}
+              renderItem={(item, index) => {
+                if (item.totalCost > 0)
+                  return (
+                    <div className="itemList">
+                      <Divider style={{ margin: '8px' }} />
+                      <List.Item>
+                        <List.Item.Meta
+                          avatar={
+                            <Avatar
+                              style={{ fontSize: '3em' }}
+                              size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
+                              className="iconItems"
+                            >
+                              {String.fromCodePoint(item.code)}
+                            </Avatar>
+                          }
+                          title={<DropDown itemList={item} />}
+                          description={<p style={{ fontSize: 'large' }}>{item.totalCost} RON</p>}
+                        />
+                      </List.Item>
+                    </div>
+                  )
+              }}
             />
           </Card>
         </Col>

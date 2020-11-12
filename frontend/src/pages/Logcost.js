@@ -6,11 +6,13 @@ import URLs from '../utils/valid_url.js'
 import { useUser } from '../utils/userContext.js'
 import logCostImage from '../images/logCost.jpg'
 import { success, failure, warning } from '../utils/popup_messages.js'
+import { Redirect } from 'react-router-dom'
 
 function Logcost(props) {
   const [radioVal, setRadioVal] = useState('')
   const [cost, setCost] = useState(0)
   const { user } = useUser()
+  const [refresh, setRefresh] = useState(false)
 
   const labels = ['food', 'house-bills', 'car-diesel', 'medicines', 'clothes', 'others']
 
@@ -36,10 +38,10 @@ function Logcost(props) {
         })
 
         success()
-        window.location = props.location.pathname
+        setRefresh(true)
       } catch (err) {
         failure(err.message)
-        window.location = props.location.pathname
+        setRefresh(true)
       }
     } else warning()
   }
@@ -86,6 +88,7 @@ function Logcost(props) {
           </Card>
         </Col>
       </div>
+      {refresh ? <Redirect to="/logcost" /> : null}
     </>
   )
 }
