@@ -6,7 +6,7 @@
 .pnp.js
 
 # private
-valid_url.js
+#valid_url.js
 
 # testing
 /coverage
