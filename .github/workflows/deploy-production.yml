@@ -4,7 +4,7 @@ name: Deploy to production
 # On which events to run the jobs
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
