@@ -5,7 +5,7 @@ const PORT_DEV = '4000'
 const PORT_PROD = '80'
 
 const IP = process.env.NODE_ENV === 'production' ? IP_PROD : IP_DEV
-const PORT = process.env.NODE_ENV === 'production' ? PORT_PROD : PORT_DEV
+const PORT = process.env.NODE_ENV === 'production' ? '' : PORT_DEV
 
 const URLs = {
   login: `http://${IP}:${PORT}/api/auth`,
