@@ -41,7 +41,7 @@ router.get('/currentLogs', auth, async (req, res) => {
 
 router.post('/history', auth, async (req, res) => {
   const schema = Joi.object({
-    skip: Joi.number().integer().min(0)
+    skip: Joi.number().integer().min(0),
   })
 
   const result = schema.validate(req.body)
@@ -49,11 +49,13 @@ router.post('/history', auth, async (req, res) => {
 
   const results = await queries.getAllLogs(req.body.skip)
 
-  if (!results) return res.status(500).send('Internal Server Error!')
+  console.log(results)
+
+  if (!results) return res.send('No Data!')
 
   let count = await queries.getAllLogsCount()
 
-  if (!count) return res.status(500).send('Internal Server Error!')
+  if (!count) return res.send('No Data!')
 
   count = Math.ceil(count / 20)
 

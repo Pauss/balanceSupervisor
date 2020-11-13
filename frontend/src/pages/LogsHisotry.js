@@ -18,13 +18,20 @@ function LogsHistory() {
   useEffect(() => {
     console.log('totalPages before get', totalPages)
     ;(async function anyNameFunction() {
-      const res = await getHistory(0)
-      //prepare data
-      mapSymbols_array(res.results)
-      setTotalPages(res.count)
+      try {
+        const res = await getHistory(0)
+        console.log('res', res)
+        if (res !== undefined && res.results != undefined) {
+          //prepare data
+          mapSymbols_array(res.results)
+          setTotalPages(res.count)
 
-      //set data
-      setHistory(res.results)
+          //set data
+          setHistory(res.results)
+        }
+      } catch (err) {
+        failure(err)
+      }
     })()
   }, [])
 
@@ -35,8 +42,8 @@ function LogsHistory() {
         { skip },
         {
           headers: {
-            'x-auth-token': `${user.token}`
-          }
+            'x-auth-token': `${user.token}`,
+          },
         }
       )
 
@@ -50,12 +57,20 @@ function LogsHistory() {
     console.log('totalPages before get', totalPages)
     setPage(page)
     const skip = page * 20 - 20
-    const res = await getHistory(skip)
+    try {
+      const res = await getHistory(skip)
+      console.log('res', res)
+      if (res !== undefined && res.results != undefined) {
+        //prepare data
+        mapSymbols_array(res.results)
+        setTotalPages(res.count)
 
-    mapSymbols_array(res.results)
-    setTotalPages(res.count)
-    console.log(res.results[0])
-    setHistory(res.results)
+        //set data
+        setHistory(res.results)
+      }
+    } catch (err) {
+      failure(err)
+    }
   }
 
   return (
@@ -68,17 +83,29 @@ function LogsHistory() {
               itemLayout="horizontal"
               dataSource={history}
               size="small"
-              renderItem={(item, index) => (
-                <div className="itemList-history">
-                  {index ? <Divider style={{ margin: '8px' }} /> : null}
+              renderItem={(item, index) => {
+                if (item.label !== undefined) {
+                  return (
+                    <div className="itemList-history">
+                      {index ? <Divider style={{ margin: '8px' }} /> : null}
 
-                  <List.Item>
-                    <List.Item.Meta description={<Description item={item} code={item.code} />} />
-                  </List.Item>
-                </div>
-              )}
+                      <List.Item>
+                        <List.Item.Meta
+                          description={<Description item={item} code={item.code} />}
+                        />
+                      </List.Item>
+                    </div>
+                  )
+                }
+              }}
             />
-            <Pagination defaultPageSize="20" pageSize="20" onChange={onChange} defaultCurrent={page} total={totalPages * 20} />
+            <Pagination
+              defaultPageSize="20"
+              pageSize="20"
+              onChange={onChange}
+              defaultCurrent={page}
+              total={totalPages * 20}
+            />
           </Card>
         </Col>
       </div>
