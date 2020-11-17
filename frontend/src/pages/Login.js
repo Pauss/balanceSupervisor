@@ -6,6 +6,7 @@ import { useUser } from '../utils/userContext.js'
 import {} from 'dotenv/config.js'
 import URLs from '../utils/valid_url.js'
 import { failure } from '../utils/popup_messages.js'
+import { Redirect } from 'react-router-dom'
 
 const layout = {
   labelCol: {
@@ -54,6 +55,7 @@ function Login() {
 
   function onFinishFailed(errorInfo) {
     failure(errorInfo)
+    setToDashboard()
   }
 
   return (
@@ -104,7 +106,7 @@ function Login() {
           </Button>
         </Form.Item>
       </Form>
-      {toDashboard ? refreshPage : null}
+      {toDashboard ? <Redirect to="/dashboard" /> : null}
     </>
   )
 }
