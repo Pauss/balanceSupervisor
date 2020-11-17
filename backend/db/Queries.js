@@ -55,6 +55,16 @@ class Queries {
 
     return result
   }
+
+  async deleteCost(id) {
+    try {
+      let result = await LogCost.findByIdAndDelete({ _id: id })
+
+      return result
+    } catch (err) {
+      return 0
+    }
+  }
 }
 
 let queries = new Queries()

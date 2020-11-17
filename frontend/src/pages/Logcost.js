@@ -50,12 +50,7 @@ function Logcost(props) {
     <>
       <div className="site-card-wrapper">
         <Col span={26}>
-          <Card
-            headStyle={{ fontSize: '200%' }}
-            title="On what did you spend money this time?"
-            bordered={false}
-            //cover={<img className="imageLog" alt="example" src={logCostImage} />}
-          >
+          <Card headStyle={{ fontSize: '200%' }} title="On what did you spend money this time?" bordered={false}>
             <Col span={26}>
               <InputNumber
                 defaultValue={0}

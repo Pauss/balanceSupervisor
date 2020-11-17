@@ -1,25 +1,25 @@
-import React from 'react';
-import './App.css';
-import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
-import Logcost from './pages/Logcost';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import LogsHistory from './pages/LogsHisotry';
+import React from 'react'
+import './App.css'
+import Home from './pages/Home'
+import Dashboard from './pages/Dashboard'
+import Logcost from './pages/Logcost'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import LogsHistory from './pages/LogsHisotry'
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Layout } from 'antd';
-import Header from './components/layout/Header';
-import Footer from './components/layout/Footer';
-import ProtectedRoute from './components/ProtectedRoute';
-import { UserProvider } from './utils/userContext.js';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { Layout } from 'antd'
+import Header from './components/layout/Header'
+import Footer from './components/layout/Footer'
+import ProtectedRoute from './components/ProtectedRoute'
+import { UserProvider } from './utils/userContext.js'
 
 const contentLayout = {
   //padding: '50px',
   marginTop: '64px'
-};
+}
 
-const name = process.env.NODE_ENV === 'production' ? '/balance-supervisor' : '';
+const name = process.env.NODE_ENV === 'production' ? '/balance-supervisor' : ''
 
 function App() {
   return (
@@ -49,7 +49,7 @@ function App() {
         <Footer />
       </Layout>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

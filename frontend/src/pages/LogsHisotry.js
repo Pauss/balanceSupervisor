@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { List, Divider, Col, Card, Pagination } from 'antd'
+import { List, Divider, Col, Card, Pagination, Button, Popconfirm } from 'antd'
 import '../App.css'
 import axios from 'axios'
 import URLs from '../utils/valid_url.js'
-import { failure } from '../utils/popup_messages.js'
+import { failure, success } from '../utils/popup_messages.js'
 import { useUser } from '../utils/userContext.js'
-import labels_codes from '../utils/label_codes.js'
 import Description from '../components/Description'
 import { mapSymbols_array } from '../utils/obj_manipulation.js'
 
@@ -16,23 +15,7 @@ function LogsHistory() {
   const [totalPages, setTotalPages] = useState(2)
 
   useEffect(() => {
-    console.log('totalPages before get', totalPages)
-    ;(async function anyNameFunction() {
-      try {
-        const res = await getHistory(0)
-        console.log('res', res)
-        if (res !== undefined && res.results != undefined) {
-          //prepare data
-          mapSymbols_array(res.results)
-          setTotalPages(res.count)
-
-          //set data
-          setHistory(res.results)
-        }
-      } catch (err) {
-        failure(err)
-      }
-    })()
+    onChange(1)
   }, [])
 
   async function getHistory(skip) {
@@ -42,8 +25,8 @@ function LogsHistory() {
         { skip },
         {
           headers: {
-            'x-auth-token': `${user.token}`,
-          },
+            'x-auth-token': `${user.token}`
+          }
         }
       )
 
@@ -54,13 +37,11 @@ function LogsHistory() {
   }
 
   async function onChange(page, pageSize) {
-    console.log('totalPages before get', totalPages)
     setPage(page)
     const skip = page * 20 - 20
     try {
       const res = await getHistory(skip)
-      console.log('res', res)
-      if (res !== undefined && res.results != undefined) {
+      if (res !== undefined && res.results !== undefined) {
         //prepare data
         mapSymbols_array(res.results)
         setTotalPages(res.count)
@@ -70,6 +51,25 @@ function LogsHistory() {
       }
     } catch (err) {
       failure(err)
+    }
+  }
+
+  async function onDelete(id) {
+    try {
+      await axios.delete(
+        URLs.deleteLog,
+
+        {
+          headers: {
+            'x-auth-token': `${user.token}`
+          },
+          data: { id }
+        }
+      )
+      success()
+      onChange(page)
+    } catch (err) {
+      failure(err.message)
     }
   }
 
@@ -86,26 +86,35 @@ function LogsHistory() {
               renderItem={(item, index) => {
                 if (item.label !== undefined) {
                   return (
-                    <div className="itemList-history">
-                      {index ? <Divider style={{ margin: '8px' }} /> : null}
+                    <>
+                      <div className="itemList-history">
+                        {index ? <Divider style={{ margin: '8px' }} /> : null}
 
-                      <List.Item>
-                        <List.Item.Meta
-                          description={<Description item={item} code={item.code} />}
-                        />
-                      </List.Item>
-                    </div>
+                        <List.Item>
+                          <List.Item.Meta description={<Description item={item} code={item.code} />} />
+                        </List.Item>
+                      </div>
+                      <Button size="small" style={{ display: 'inline' }} type="text">
+                        {' '}
+                        edit
+                      </Button>
+                      <p style={{ display: 'inline' }}>|</p>
+                      <Popconfirm
+                        onConfirm={() => onDelete(item._id)}
+                        title="Are you sure delete this log？"
+                        okText="Yes"
+                        cancelText="No"
+                        okButtonProps="small"
+                      >
+                        {' '}
+                        delete
+                      </Popconfirm>
+                    </>
                   )
                 }
               }}
             />
-            <Pagination
-              defaultPageSize="20"
-              pageSize="20"
-              onChange={onChange}
-              defaultCurrent={page}
-              total={totalPages * 20}
-            />
+            <Pagination defaultPageSize="20" pageSize="20" onChange={onChange} defaultCurrent={page} total={totalPages * 20} />
           </Card>
         </Col>
       </div>
