@@ -78,7 +78,7 @@ function LogsHistory() {
       <div></div>
       <div className="site-card-wrapper">
         <Col>
-          <Card style={{ padding: '20px' }}>
+          <Card>
             <List
               itemLayout="horizontal"
               dataSource={history}

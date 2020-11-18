@@ -7,6 +7,12 @@ import { useUser } from '../utils/userContext.js'
 import logCostImage from '../images/logCost.jpg'
 import { success, failure, warning } from '../utils/popup_messages.js'
 import { Redirect } from 'react-router-dom'
+import OptionTags from '../components/OptionTags'
+
+const containerRadio = {
+  display: 'inline-block',
+  verticalAlign: 'top'
+}
 
 function Logcost(props) {
   const [radioVal, setRadioVal] = useState('')
@@ -50,33 +56,49 @@ function Logcost(props) {
     <>
       <div className="site-card-wrapper">
         <Col span={26}>
-          <Card headStyle={{ fontSize: '200%' }} title="On what did you spend money this time?" bordered={false}>
+          <Card>
             <Col span={26}>
-              <InputNumber
-                defaultValue={0}
-                formatter={(value) => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                onChange={onChange}
-                size="large"
-              />
+              <p className="titleStyle">On what did you spend money this time?</p>
+            </Col>
+            <br />
+
+            <Col span={26}>
+              <div style={{ display: 'block', color: 'grey' }}>
+                <p style={{ display: 'inline-block', marginRight: '5px', color: 'grey' }}>RON: </p>
+                <InputNumber
+                  formatter={(value) => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  onChange={onChange}
+                  size="large"
+                  style={{ color: 'grey', borderColor: 'transparent', display: 'inline-block' }}
+                />
+              </div>
             </Col>
 
             <br />
-            <br />
+
             <Col span={26}>
-              <Radio.Group onChange={onSelect} value={radioVal} size="large">
-                {labels.map((label, index) => {
-                  return (
-                    <Radio style={{ fontSize: '200' }} value={label} key={index}>
-                      {' '}
-                      {label}
-                    </Radio>
-                  )
-                })}
-              </Radio.Group>
+              <div style={containerRadio}>
+                <Radio.Group onChange={onSelect} value={radioVal} size="large">
+                  {labels.map((label, index) => {
+                    return (
+                      <Radio className="radioStyle" value={label} key={index}>
+                        {' '}
+                        {label}
+                      </Radio>
+                    )
+                  })}
+                </Radio.Group>
+              </div>
             </Col>
+
+            <br />
+
+            <OptionTags />
+
             <br />
             <br />
+
             <Button type="primary" shape="round" size="large" onClick={onLog}>
               Click to log cost
             </Button>

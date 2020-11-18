@@ -150,9 +150,44 @@
 }
 
 .ant-card-body {
-  padding: 10px;
+  padding: 20px;
 }
 
 .ant-list-lg .ant-list-item {
   padding: 10px 0px 0px 0px;
+}
+
+.ant-input-number {
+  width: 110px;
+}
+
+.ant-radio-wrapper {
+  display: block;
+  text-align: left;
+}
+
+.titleStyle {
+  background: linear-gradient(to bottom left, #ff9933 0%, #cc3399 100%);
+  font-size: large;
+  letter-spacing: 3px;
+  font-weight: bolder;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  display: inline;
+  font-style: oblique;
+  margin: 20px;
+}
+
+.ant-mentions > textarea,
+.ant-mentions-measure {
+  padding: 4px;
+  min-height: 50px;
+}
+
+.radioStyle {
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  font-size: 17px;
+  color: grey;
 }

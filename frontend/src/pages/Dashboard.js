@@ -47,23 +47,8 @@ function Dashboard() {
       <></>
       <div className="site-card-wrapper">
         <Col>
-          <Card style={{ padding: '20px' }}>
-            <p
-              style={{
-                background: 'linear-gradient(to bottom left, #ff9933 0%, #cc3399 100%)',
-                fontSize: 'large',
-                letterSpacing: '3px',
-                fontWeight: 'bolder',
-                WebkitTextFillColor: 'transparent',
-                WebkitBackgroundClip: 'text',
-                display: 'inline',
-                fontStyle: 'oblique',
-                margin: '20px'
-              }}
-            >
-              {' '}
-              Spendings of this month until today...
-            </p>
+          <Card>
+            <p className="titleStyle"> Spendings of this month until today...</p>
             <List
               itemLayout="horizontal"
               dataSource={dashboardData}
