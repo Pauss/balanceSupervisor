@@ -195,3 +195,7 @@
 .ant-tag {
   margin: 0px 5px;
 }
+
+.ant-list-sm .ant-list-item {
+  padding: 10px 0px;
+}
