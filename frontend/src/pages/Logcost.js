@@ -10,7 +10,7 @@ import { Redirect } from 'react-router-dom'
 const { Option } = Mentions
 
 const tags = ['carrefour', 'mega', 'EGROS', 'EON', 'RDS', 'rent', 'insurance', 'gas', 'vacantion']
-const listInputTags = []
+let listInputTags = []
 
 const containerRadio = {
   display: 'inline-block',
@@ -21,9 +21,9 @@ function Logcost(props) {
   const [radioVal, setRadioVal] = useState('')
   const [cost, setCost] = useState(0)
   const { user } = useUser()
-  const [refresh, setRefresh] = useState(false)
   const [inputTags, setInputTags] = useState([])
   const [description, setDescription] = useState()
+  const [text, setText] = useState('')
 
   const labels = ['food', 'house-bills', 'car-diesel', 'medicines', 'clothes', 'others']
 
@@ -31,12 +31,22 @@ function Logcost(props) {
     setRadioVal(e.target.value)
     console.log(radioVal)
   }
+  function init_states() {
+    setRadioVal('')
+    setCost(0)
+    setInputTags([])
+    setDescription()
+    setText('')
+    listInputTags = []
+  }
 
   function onChange(value) {
     setCost(value)
   }
 
   function onChangeDescription(value) {
+    console.log('text:', value)
+
     value = value.trim()
 
     //replace new line
@@ -65,6 +75,8 @@ function Logcost(props) {
   async function onLog(e) {
     e.preventDefault()
 
+    onChangeDescription(text)
+
     const message = { label: radioVal, cost: cost, userID: user._id, tags: inputTags, description: description }
     if (radioVal && cost > 0) {
       try {
@@ -75,16 +87,17 @@ function Logcost(props) {
         })
 
         success()
-        setRefresh(true)
+        init_states()
       } catch (err) {
         failure(err.message)
-        setRefresh(true)
       }
     } else warning()
   }
 
   return (
     <>
+      {/* {console.log('inputTags', inputTags)}
+      {console.log('radioVal', radioVal)} */}
       <div className="site-card-wrapper">
         <Col span={26}>
           <Card>
@@ -102,6 +115,7 @@ function Logcost(props) {
                   onChange={onChange}
                   size="large"
                   style={{ color: 'grey', borderColor: 'transparent', display: 'inline-block' }}
+                  value={cost}
                 />
               </div>
             </Col>
@@ -127,11 +141,12 @@ function Logcost(props) {
 
             <Mentions
               style={{ textAlign: 'center', color: 'grey', borderColor: 'transparent' }}
-              onChange={onChangeDescription}
+              onChange={(value) => setText(value)}
               onSelect={onSelectTags}
               placeholder="input # to mention tag"
               prefix={'#'}
               className="itemList"
+              value={text}
             >
               {tags.map((value) => (
                 <Option key={value} value={value}>
@@ -149,7 +164,6 @@ function Logcost(props) {
           </Card>
         </Col>
       </div>
-      {refresh ? <Redirect to="/logcost" /> : null}
     </>
   )
 }
