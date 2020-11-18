@@ -71,6 +71,7 @@ function Dashboard() {
                           }
                           title={<DropDown itemList={item} />}
                           description={<p style={{ fontSize: 'large' }}>{item.totalCost} RON</p>}
+                          key={item.label}
                         />
                       </List.Item>
                     </div>

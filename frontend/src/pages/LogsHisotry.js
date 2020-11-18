@@ -94,21 +94,23 @@ function LogsHistory() {
                           <List.Item.Meta description={<Description item={item} code={item.code} />} />
                         </List.Item>
                       </div>
-                      <Button size="small" style={{ display: 'inline' }} type="text">
-                        {' '}
-                        edit
-                      </Button>
-                      <p style={{ display: 'inline' }}>|</p>
-                      <Popconfirm
-                        onConfirm={() => onDelete(item._id)}
-                        title="Are you sure delete this log？"
-                        okText="Yes"
-                        cancelText="No"
-                        okButtonProps="small"
-                      >
-                        {' '}
-                        delete
-                      </Popconfirm>
+                      <div style={{ display: 'block' }}>
+                        <Button size="small" style={{ display: 'inline-block' }} type="text">
+                          {' '}
+                          edit
+                        </Button>
+                        <p style={{ display: 'inline-block' }}>|</p>
+                        <Popconfirm
+                          onConfirm={() => onDelete(item._id)}
+                          title="Are you sure delete this log？"
+                          okText="Yes"
+                          cancelText="No"
+                          okButtonProps="small"
+                        >
+                          {' '}
+                          delete
+                        </Popconfirm>
+                      </div>
                     </>
                   )
                 }

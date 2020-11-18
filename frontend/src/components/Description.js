@@ -1,4 +1,5 @@
 import React from 'react'
+import { Tag } from 'antd'
 
 export default function Description(props) {
   const item = props.item
@@ -24,6 +25,20 @@ export default function Description(props) {
         {'   '}
         {item.cost} RON
       </div>
+
+      <div style={{ display: 'block' }}>
+        {item.tags.length
+          ? item.tags.map((tag) => {
+              return (
+                <Tag style={{ display: 'inline-block' }} color="cyan">
+                  {' '}
+                  {tag}
+                </Tag>
+              )
+            })
+          : ''}
+      </div>
+      {item.description !== undefined ? <p style={{ paddingTop: '10px', margin: '0px' }}>Description: {item.description}</p> : ''}
     </>
   )
 }

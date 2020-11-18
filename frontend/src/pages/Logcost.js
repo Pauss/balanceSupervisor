@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
-import { Card, Col, InputNumber, Radio, Button } from 'antd'
+import { Card, Col, InputNumber, Radio, Button, Mentions } from 'antd'
 import '../App.css'
 import axios from 'axios'
 import URLs from '../utils/valid_url.js'
 import { useUser } from '../utils/userContext.js'
-import logCostImage from '../images/logCost.jpg'
 import { success, failure, warning } from '../utils/popup_messages.js'
 import { Redirect } from 'react-router-dom'
-import OptionTags from '../components/OptionTags'
+
+const { Option } = Mentions
+
+const tags = ['carrefour', 'mega', 'EGROS', 'EON', 'RDS', 'rent', 'insurance', 'gas', 'vacantion']
+const listInputTags = []
 
 const containerRadio = {
   display: 'inline-block',
@@ -19,6 +22,8 @@ function Logcost(props) {
   const [cost, setCost] = useState(0)
   const { user } = useUser()
   const [refresh, setRefresh] = useState(false)
+  const [inputTags, setInputTags] = useState([])
+  const [description, setDescription] = useState()
 
   const labels = ['food', 'house-bills', 'car-diesel', 'medicines', 'clothes', 'others']
 
@@ -31,10 +36,36 @@ function Logcost(props) {
     setCost(value)
   }
 
+  function onChangeDescription(value) {
+    value = value.trim()
+
+    //replace new line
+    value = value.replace(/\r?\n|\r/g, ' ')
+
+    //replave empty spaces
+    value = value.replace(/\s\s+/g, ' ')
+
+    const words = value.split(' ')
+
+    var regex = RegExp('^[a-zA-Z0-9]+')
+    console.log(words)
+
+    //filter description wihtout tags
+    value = words.filter((word) => regex.test(word))
+    value = value.join(' ')
+
+    //set description
+    setDescription(value)
+  }
+  function onSelectTags(option) {
+    listInputTags.push(option.value)
+    setInputTags(listInputTags)
+  }
+
   async function onLog(e) {
     e.preventDefault()
 
-    const message = { label: radioVal, cost: cost, userID: user._id }
+    const message = { label: radioVal, cost: cost, userID: user._id, tags: inputTags, description: description }
     if (radioVal && cost > 0) {
       try {
         await axios.post(URLs.logCost, message, {
@@ -94,7 +125,20 @@ function Logcost(props) {
 
             <br />
 
-            <OptionTags />
+            <Mentions
+              style={{ textAlign: 'center', color: 'grey', borderColor: 'transparent' }}
+              onChange={onChangeDescription}
+              onSelect={onSelectTags}
+              placeholder="input # to mention tag"
+              prefix={'#'}
+              className="itemList"
+            >
+              {tags.map((value) => (
+                <Option key={value} value={value}>
+                  {value}
+                </Option>
+              ))}
+            </Mentions>
 
             <br />
             <br />
