@@ -21,7 +21,7 @@ router.post('/log', auth, async (req, res) => {
 
   await newLog.save()
 
-  res.status(200).send('Success')
+  res.send('Success')
 })
 
 router.get('/currentLogs', auth, async (req, res) => {
@@ -36,7 +36,7 @@ router.get('/currentLogs', auth, async (req, res) => {
 
   if (!results) return res.status(500).send('Internal Server Error!')
 
-  res.send(results).status(200)
+  res.json(results)
 })
 
 router.post('/history', auth, async (req, res) => {
@@ -49,15 +49,15 @@ router.post('/history', auth, async (req, res) => {
 
   const results = await queries.getAllLogs(req.body.skip)
 
-  if (!results) return res.send('No Data!')
+  if (!results) return res.json({ results: [], message: 'No Data!' })
 
   let count = await queries.getAllLogsCount()
 
-  if (!count) return res.send('No Data!')
+  if (!count) return res.json({ results: [], message: 'No Data!' })
 
   count = Math.ceil(count / 20)
 
-  res.status(200).send({ results, count })
+  res.json({ results, count })
 })
 
 router.delete('/delete-log', auth, async (req, res) => {
@@ -77,7 +77,8 @@ router.delete('/delete-log', auth, async (req, res) => {
 
   if (!results) return res.send('Log not found!')
 
-  res.status(200).send('Item deleted!')
+  //todo
+  res.send('Item deleted!')
 })
 
 export { router as logCostRouter }

@@ -12,7 +12,7 @@ function LogsHistory() {
   const [history, setHistory] = useState([])
   const [page, setPage] = useState(1)
   const { user } = useUser()
-  const [totalPages, setTotalPages] = useState(2)
+  const [totalPages, setTotalPages] = useState(1)
 
   useEffect(() => {
     onChange(1)
@@ -44,7 +44,7 @@ function LogsHistory() {
       if (res !== undefined && res.results !== undefined) {
         //prepare data
         mapSymbols_array(res.results)
-        setTotalPages(res.count)
+        setTotalPages(res.count ? res.count : 1)
 
         //set data
         setHistory(res.results)
