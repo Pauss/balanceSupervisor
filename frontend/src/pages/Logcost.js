@@ -45,7 +45,7 @@ function Logcost(props) {
   }
 
   function onChangeDescription(value) {
-    console.log('text:', value)
+    setText(value)
 
     value = value.trim()
 
@@ -74,8 +74,6 @@ function Logcost(props) {
 
   async function onLog(e) {
     e.preventDefault()
-
-    onChangeDescription(text)
 
     const message = { label: radioVal, cost: cost, userID: user._id, tags: inputTags, description: description }
     if (radioVal && cost > 0) {
@@ -141,7 +139,7 @@ function Logcost(props) {
 
             <Mentions
               style={{ textAlign: 'center', color: 'grey', borderColor: 'transparent' }}
-              onChange={(value) => setText(value)}
+              onChange={onChangeDescription}
               onSelect={onSelectTags}
               placeholder="input # to mention tag"
               prefix={'#'}
