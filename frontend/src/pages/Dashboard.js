@@ -42,13 +42,23 @@ function Dashboard() {
     }
   }
 
+  function getFinalCost() {
+    let total = 0
+
+    dashboardData.forEach((log) => {
+      total += log.totalCost
+    })
+
+    return total
+  }
+
   return (
     <>
       <></>
       <div className="site-card-wrapper">
         <Col>
           <Card>
-            <p className="titleStyle"> Spendings of this month until today...</p>
+            <p className="titleStyle"> Spendings of this month until today: {getFinalCost()}RON</p>
             <List
               itemLayout="horizontal"
               dataSource={dashboardData}
