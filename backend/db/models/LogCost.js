@@ -31,8 +31,8 @@ function validateLog(logCost) {
     label: Joi.any().valid('food', 'house-bills', 'car-diesel', 'medicines', 'clothes', 'others').required(),
     cost: Joi.number().required(),
     userID: Joi.required(),
-    tags: Joi.array().items(Joi.string()),
-    description: Joi.string()
+    tags: Joi.array().items(Joi.string().allow(null, '')),
+    description: Joi.string().allow(null, '')
   })
 
   return schema.validate(logCost)
