@@ -58,7 +58,7 @@ function Dashboard() {
       <div className="site-card-wrapper">
         <Col>
           <Card>
-            <p className="titleStyle"> Spendings of this month until today: {getFinalCost()}RON</p>
+            <p className="titleStyle"> Spendings of this month until today: {getFinalCost().toFixed(2)}RON</p>
             <List
               itemLayout="horizontal"
               dataSource={dashboardData}
@@ -80,7 +80,7 @@ function Dashboard() {
                             </Avatar>
                           }
                           title={<DropDown itemList={item} />}
-                          description={<p style={{ fontSize: 'large' }}>{item.totalCost} RON</p>}
+                          description={<p style={{ fontSize: 'large' }}>{item.totalCost.toFixed(2)} RON</p>}
                           key={item.label}
                         />
                       </List.Item>

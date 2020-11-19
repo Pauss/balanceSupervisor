@@ -21,7 +21,7 @@ export default function Description(props) {
         }}
       >
         {'   '}
-        {item.cost} RON
+        {item.cost.toFixed(2)} RON
       </div>
 
       <div style={{ display: 'block' }}>
