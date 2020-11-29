@@ -39,7 +39,7 @@ router.post('/add-member', auth, async (req, res) => {
 
   console.log(group)
 
-  let user = await User.findByIdAndUpdate(userID, { name: 'test', groupID: group._id }, { new: true })
+  let user = await User.findByIdAndUpdate(userID, { groupID: group._id }, { new: true })
 
   if (!user.groupID) return res.json({ message: 'Could not set group_id to user!' })
 
