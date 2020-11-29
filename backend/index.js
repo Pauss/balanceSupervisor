@@ -4,6 +4,7 @@ import Debug from 'debug'
 import { logCostRouter } from './src/routes/logCostRouter.js'
 import { userRouter } from './src/routes/userRouter.js'
 import { authRouter } from './src/routes/auth.js'
+import { groupRouter } from './src/routes/group.js'
 import cors from 'cors'
 import morgan from 'morgan'
 const app = express()
@@ -24,5 +25,6 @@ app.get('/', (req, res) => {
 app.use('/api/costs/', logCostRouter)
 app.use('/api/users/', userRouter)
 app.use('/api/auth/', authRouter)
+app.use('/api/group/', groupRouter)
 
 app.listen(port, () => debug(`Listening on port ${port}...`))

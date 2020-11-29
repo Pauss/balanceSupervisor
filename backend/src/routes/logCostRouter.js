@@ -25,10 +25,12 @@ router.post('/log', auth, async (req, res) => {
 })
 
 router.get('/currentLogs', auth, async (req, res) => {
+  console.log(req.user._id)
+
   let total = []
 
   const fn = (label) => {
-    return queries.getCurrentMonthLogs(label)
+    return queries.getCurrentMonthLogs(label, req.user._id)
   }
 
   const requests = labels.map(fn)
@@ -47,11 +49,11 @@ router.post('/history', auth, async (req, res) => {
   const result = schema.validate(req.body)
   if (result.error) return res.status(400).send(result.error.details[0].message)
 
-  const results = await queries.getAllLogs(req.body.skip)
+  const results = await queries.getAllLogs(req.body.skip, req.user._id)
 
   if (!results) return res.json({ results: [], message: 'No Data!' })
 
-  let count = await queries.getAllLogsCount()
+  let count = await queries.getAllLogsCount(req.user._id)
 
   if (!count) return res.json({ results: [], message: 'No Data!' })
 

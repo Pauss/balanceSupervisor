@@ -8,7 +8,8 @@ const db_connect = {
   url_db: `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_IP}:${process.env.DB_PORT}/balanceSupervisor?authSource=admin`,
   params: {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
   }
 }
 

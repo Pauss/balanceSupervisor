@@ -29,31 +29,73 @@ class Queries {
     }
   }
 
-  async getCurrentMonthLogs(label) {
+  async getCurrentMonthLogs(label, id_user) {
+    //TODO - get user group in a middleWare function
+
     let currentDate = new Date()
     let month = currentDate.getMonth()
     let year = currentDate.getFullYear()
 
     let startDate = new Date(year, month, 1, 0, 0, 0)
 
+    let user = await User.findById(id_user).populate({
+      path: 'groupID',
+      select: '_id'
+    })
+
+    const group_id = user.groupID._id
+
     let result = await LogCost.find({ label: label, created: { $gte: startDate, $lte: currentDate } }).populate({
       path: 'userID',
-      select: 'name'
+      select: ['name', 'groupID'],
+      match: { groupID: { $eq: group_id } }
+    })
+
+    result = result.filter((log) => {
+      if (log.userID) return log
     })
 
     return result
   }
 
-  async getAllLogs(skip) {
-    let result = await LogCost.find({}).sort({ created: -1 }).limit(20).skip(skip).populate({ path: 'userID', select: 'name' })
+  async getAllLogs(skip, id_user) {
+    let user = await User.findById(id_user).populate({
+      path: 'groupID',
+      select: '_id'
+    })
+
+    const group_id = user.groupID._id
+
+    let result = await LogCost.find({})
+      .sort({ created: -1 })
+      .limit(20)
+      .skip(skip)
+      .populate({ path: 'userID', select: 'name', match: { groupID: { $eq: group_id } } })
+
+    result = result.filter((log) => {
+      if (log.userID) return log
+    })
 
     return result
   }
 
-  async getAllLogsCount(skip) {
-    let result = await LogCost.find({}).countDocuments()
+  async getAllLogsCount(id_user) {
+    let user = await User.findById(id_user).populate({
+      path: 'groupID',
+      select: '_id'
+    })
 
-    return result
+    const group_id = user.groupID._id
+
+    let result = await LogCost.find({}).populate({ path: 'userID', select: 'name', match: { groupID: { $eq: group_id } } })
+
+    result = result.filter((log) => {
+      if (log.userID) return log
+    })
+
+    console.log(result.length)
+
+    return result.length
   }
 
   async deleteCost(id) {
