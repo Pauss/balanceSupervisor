@@ -29,12 +29,21 @@ class Queries {
     }
   }
 
-  async getCurrentMonthLogs(label, groupID) {
+  async getCurrentMonthLogs(label, userID, groupID) {
     let currentDate = new Date()
     let month = currentDate.getMonth()
     let year = currentDate.getFullYear()
 
     let startDate = new Date(year, month, 1, 0, 0, 0)
+
+    if (!groupID) {
+      let result = await LogCost.find({ label: label, created: { $gte: startDate, $lte: currentDate }, userID: userID }).populate({
+        path: 'userID',
+        select: 'name'
+      })
+
+      return result
+    }
 
     let result = await LogCost.find({ label: label, created: { $gte: startDate, $lte: currentDate } }).populate({
       path: 'userID',
@@ -49,7 +58,17 @@ class Queries {
     return result
   }
 
-  async getAllLogs(skip, groupID) {
+  async getAllLogs(skip, userID, groupID) {
+    if (!groupID) {
+      let result = await LogCost.find({ userID: userID })
+        .sort({ created: -1 })
+        .limit(20)
+        .skip(skip)
+        .populate({ path: 'userID', select: 'name' })
+
+      return result
+    }
+
     let result = await LogCost.find({})
       .sort({ created: -1 })
       .limit(20)
@@ -63,7 +82,13 @@ class Queries {
     return result
   }
 
-  async getAllLogsCount(groupID) {
+  async getAllLogsCount(userID, groupID) {
+    if (!groupID) {
+      let result = await LogCost.find({ userID: userID }).populate({ path: 'userID', select: 'name' }).countDocuments()
+
+      return result
+    }
+
     let result = await LogCost.find({}).populate({ path: 'userID', select: 'name', match: { groupID: { $eq: groupID } } })
 
     result = result.filter((log) => {

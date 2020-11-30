@@ -26,14 +26,10 @@ router.post('/log', auth, async (req, res) => {
 })
 
 router.get('/currentLogs', auth, idetifyUserGroup, async (req, res) => {
-  console.log(req.user._id)
-
-  console.log(req.user.groupID)
-
   let total = []
 
   const fn = (label) => {
-    return queries.getCurrentMonthLogs(label, req.user.groupID)
+    return queries.getCurrentMonthLogs(label, req.user._id, req.user.groupID)
   }
 
   const requests = labels.map(fn)
@@ -52,11 +48,11 @@ router.post('/history', auth, idetifyUserGroup, async (req, res) => {
   const result = schema.validate(req.body)
   if (result.error) return res.status(400).send(result.error.details[0].message)
 
-  const results = await queries.getAllLogs(req.body.skip, req.user.groupID)
+  const results = await queries.getAllLogs(req.body.skip, req.user._id, req.user.groupID)
 
   if (!results) return res.json({ results: [], message: 'No Data!' })
 
-  let count = await queries.getAllLogsCount(req.user.groupID)
+  let count = await queries.getAllLogsCount(req.user._id, req.user.groupID)
 
   if (!count) return res.json({ results: [], message: 'No Data!' })
 

@@ -60,7 +60,9 @@ router.post('/add-member', auth, async (req, res) => {
   if (!checkUser) res.status(400).json({ error: 'User not found!' })
 
   //check wheter newUser id already a member of this group
-  if (String(checkUser._groupID === String(group._id))) return res.json({ message: 'User is already member of this group.' })
+  console.log(group, checkUser)
+  if (checkUser._groupID && String(checkUser._groupID === String(group._id)))
+    return res.json({ message: 'User is already member of this group.' })
 
   //update new user group
   let user = await User.findByIdAndUpdate(checkUser._id, { groupID: group._id }, { new: true })
@@ -75,10 +77,28 @@ router.post('/add-member', auth, async (req, res) => {
   res.json({ message: 'Success' })
 })
 
-//todo - delte member from the group
+//todo - admin delte member from the group
+//todo - user leavea group
 
 router.delete('/delete', auth, idetifyUserGroup, async (req, res) => {
   const { groupName } = req.body
+  const userID = req.user._id
+
+  const group = await Group.findOne({ name: groupName })
+
+  //check whether group exists
+  if (!group) return res.json({ message: 'Group not found!' })
+
+  //check authorization
+  if (group.owner != userID) res.status(401).json({ error: 'Unathorized! Only owner of this group can delete it!' })
+
+  //add members of this group to null group
+  let users = await User.updateMany({ groupID: group._id }, { groupID: null }, { new: true })
+
+  //delete group
+  await Group.deleteOne({ _id: group._id })
+
+  res.json({ message: 'Success' })
 })
 
 export { router as groupRouter }

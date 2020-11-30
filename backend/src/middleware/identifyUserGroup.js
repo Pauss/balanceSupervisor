@@ -8,7 +8,9 @@ async function idetifyUserGroup(req, res, next) {
 
   if (!user) res.status(400).json({ message: 'User not found!' })
 
-  req.user.groupID = user.groupID._id
+  console.log('user', user)
+
+  if (user.groupID) req.user.groupID = user.groupID._id
 
   next()
 }
