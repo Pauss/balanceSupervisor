@@ -29,26 +29,17 @@ class Queries {
     }
   }
 
-  async getCurrentMonthLogs(label, id_user) {
-    //TODO - get user group in a middleWare function
-
+  async getCurrentMonthLogs(label, groupID) {
     let currentDate = new Date()
     let month = currentDate.getMonth()
     let year = currentDate.getFullYear()
 
     let startDate = new Date(year, month, 1, 0, 0, 0)
 
-    let user = await User.findById(id_user).populate({
-      path: 'groupID',
-      select: '_id'
-    })
-
-    const group_id = user.groupID._id
-
     let result = await LogCost.find({ label: label, created: { $gte: startDate, $lte: currentDate } }).populate({
       path: 'userID',
       select: ['name', 'groupID'],
-      match: { groupID: { $eq: group_id } }
+      match: { groupID: { $eq: groupID } }
     })
 
     result = result.filter((log) => {
@@ -58,19 +49,12 @@ class Queries {
     return result
   }
 
-  async getAllLogs(skip, id_user) {
-    let user = await User.findById(id_user).populate({
-      path: 'groupID',
-      select: '_id'
-    })
-
-    const group_id = user.groupID._id
-
+  async getAllLogs(skip, groupID) {
     let result = await LogCost.find({})
       .sort({ created: -1 })
       .limit(20)
       .skip(skip)
-      .populate({ path: 'userID', select: 'name', match: { groupID: { $eq: group_id } } })
+      .populate({ path: 'userID', select: 'name', match: { groupID: { $eq: groupID } } })
 
     result = result.filter((log) => {
       if (log.userID) return log
@@ -79,15 +63,8 @@ class Queries {
     return result
   }
 
-  async getAllLogsCount(id_user) {
-    let user = await User.findById(id_user).populate({
-      path: 'groupID',
-      select: '_id'
-    })
-
-    const group_id = user.groupID._id
-
-    let result = await LogCost.find({}).populate({ path: 'userID', select: 'name', match: { groupID: { $eq: group_id } } })
+  async getAllLogsCount(groupID) {
+    let result = await LogCost.find({}).populate({ path: 'userID', select: 'name', match: { groupID: { $eq: groupID } } })
 
     result = result.filter((log) => {
       if (log.userID) return log

@@ -9,6 +9,10 @@ const groupSchema = new mongoose.Schema({
     maxlength: 50,
     unique: true,
     default: 'general'
+  },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }
 })
 
