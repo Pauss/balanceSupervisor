@@ -37,7 +37,7 @@ class Queries {
     let startDate = new Date(year, month, 1, 0, 0, 0)
 
     if (!groupID) {
-      let result = await LogCost.find({ label: label, created: { $gte: startDate, $lte: currentDate }, userID: userID }).populate({
+      let result = await LogCost.find({ label: label, userID: userID, created: { $gte: startDate, $lte: currentDate } }).populate({
         path: 'userID',
         select: 'name'
       })
@@ -95,7 +95,7 @@ class Queries {
       if (log.userID) return log
     })
 
-    console.log(result.length)
+    debug(result.length)
 
     return result.length
   }
