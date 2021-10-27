@@ -36,7 +36,10 @@ function App() {
                   <ProtectedRoute path="/logcost" exact component={Logcost} />
                   <ProtectedRoute path="/logs-history" exact component={LogsHistory} />
                   <Route path="/login" exact component={Login} />
-                  <Route path="/register" exact component={Register} />
+                  {/* <Route path="/register" exact component={Register} /> */}
+                  <Route path="*">
+                    <h1>404 not found</h1>
+                  </Route>
                 </Switch>
               </div>
             </Layout.Content>

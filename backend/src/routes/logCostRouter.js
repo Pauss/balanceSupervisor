@@ -21,7 +21,7 @@ router.post('/log', auth, async (req, res) => {
 
   await newLog.save()
 
-  res.status(200).send('Success')
+  res.send('Success')
 })
 
 router.get('/currentLogs', auth, async (req, res) => {
@@ -36,12 +36,12 @@ router.get('/currentLogs', auth, async (req, res) => {
 
   if (!results) return res.status(500).send('Internal Server Error!')
 
-  res.send(results).status(200)
+  res.json(results)
 })
 
 router.post('/history', auth, async (req, res) => {
   const schema = Joi.object({
-    skip: Joi.number().integer().min(0),
+    skip: Joi.number().integer().min(0)
   })
 
   const result = schema.validate(req.body)
@@ -49,17 +49,36 @@ router.post('/history', auth, async (req, res) => {
 
   const results = await queries.getAllLogs(req.body.skip)
 
-  console.log(results)
-
-  if (!results) return res.send('No Data!')
+  if (!results) return res.json({ results: [], message: 'No Data!' })
 
   let count = await queries.getAllLogsCount()
 
-  if (!count) return res.send('No Data!')
+  if (!count) return res.json({ results: [], message: 'No Data!' })
 
   count = Math.ceil(count / 20)
 
-  res.send({ results, count }).status(200)
+  res.json({ results, count })
+})
+
+router.delete('/delete-log', auth, async (req, res) => {
+  const schema = Joi.object({
+    id: Joi.string()
+  })
+
+  const result = schema.validate(req.body)
+
+  console.log('result', result)
+
+  if (result.error) return res.status(400).send(result.error.details[0].message)
+
+  const results = await queries.deleteCost(req.body.id)
+
+  console.log(results)
+
+  if (!results) return res.send('Log not found!')
+
+  //todo
+  res.send('Item deleted!')
 })
 
 export { router as logCostRouter }

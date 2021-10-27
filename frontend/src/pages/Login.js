@@ -2,10 +2,11 @@ import React from 'react'
 import axios from 'axios'
 import { Form, Input, Button, Checkbox } from 'antd'
 import { useState } from 'react'
-import { Redirect } from 'react-router-dom'
 import { useUser } from '../utils/userContext.js'
 import {} from 'dotenv/config.js'
 import URLs from '../utils/valid_url.js'
+import { failure } from '../utils/popup_messages.js'
+import { Redirect } from 'react-router-dom'
 
 const layout = {
   labelCol: {
@@ -23,10 +24,13 @@ const tailLayout = {
   }
 }
 
+const refreshPage = () => {
+  window.location.reload()
+}
+
 function Login() {
   const { login, isAuthenticated } = useUser()
   const [toDashboard, setToDashboard] = useState(false)
-  const [error, setError] = useState(false)
 
   async function onFinish(values) {
     try {
@@ -45,13 +49,13 @@ function Login() {
       setToDashboard(true)
     } catch (err) {
       console.log('Error when trying to Login', err)
-      setError(true)
+      failure(err.message)
     }
   }
 
   function onFinishFailed(errorInfo) {
-    console.log('Failed:', errorInfo)
-    setError(true)
+    failure(errorInfo)
+    setToDashboard()
   }
 
   return (
@@ -103,7 +107,6 @@ function Login() {
         </Form.Item>
       </Form>
       {toDashboard ? <Redirect to="/dashboard" /> : null}
-      {error ? <p style={{ color: 'red' }}> Login Failed. Please try again. </p> : ''}
     </>
   )
 }

@@ -14,6 +14,12 @@ const logSchema = new mongoose.Schema({
   userID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
+  },
+  tags: {
+    type: [String]
+  },
+  description: {
+    type: String
   }
 })
 
@@ -24,7 +30,9 @@ function validateLog(logCost) {
   const schema = Joi.object({
     label: Joi.any().valid('food', 'house-bills', 'car-diesel', 'medicines', 'clothes', 'others').required(),
     cost: Joi.number().required(),
-    userID: Joi.required()
+    userID: Joi.required(),
+    tags: Joi.array().items(Joi.string().allow(null, '')),
+    description: Joi.string().allow(null, '')
   })
 
   return schema.validate(logCost)

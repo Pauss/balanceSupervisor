@@ -55,12 +55,12 @@ export default function Header() {
               <li>Home</li>
             </Link>
           </Menu.Item>
-          <Menu.Item key="2" style={rightStyle}>
+          {/* <Menu.Item key="2" style={rightStyle}>
             <Link to="/register">
               <li>Register</li>
             </Link>
-          </Menu.Item>
-          <Menu.Item key="3" style={rightStyle}>
+          </Menu.Item> */}
+          <Menu.Item key="2" style={rightStyle}>
             <Link to="/login">
               <li>Login</li>
             </Link>
