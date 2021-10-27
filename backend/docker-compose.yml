@@ -18,8 +18,8 @@ services:
     ports:
       - 8082:8081
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: my_password
+      ME_CONFIG_MONGODB_ADMINUSERNAME: paus
+      ME_CONFIG_MONGODB_ADMINPASSWORD: paus_suap
     depends_on:
       - mongo
 
@@ -29,8 +29,8 @@ services:
     ports:
       - 27018:27017
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: my_password
+      MONGO_INITDB_ROOT_USERNAME: paus
+      MONGO_INITDB_ROOT_PASSWORD: paus_suap
     volumes:
       - mongodb:/data/db
       - mongodb_config:/data/configdb

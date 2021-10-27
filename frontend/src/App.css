@@ -149,6 +149,12 @@
   }
 }
 
+@media only screen and (max-width: 1500px) and (min-width: 500px) {
+  .my_padding {
+    padding: 100px 300px 300px 300px;
+  }
+}
+
 .ant-card-body {
   padding: 10px;
 }
