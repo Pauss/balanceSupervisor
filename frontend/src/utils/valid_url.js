@@ -1,4 +1,4 @@
-const ADDRESS_PROD = 'https://cippau.go.ro/balance-supervisor/api'
+const ADDRESS_PROD = 'https://cippau.home.ro/balance-supervisor/api'
 const ADDRESS_DEV = 'http://192.168.100.15:4000' ////'192.168.100.15'
 
 const ADDRESS = process.env.NODE_ENV === 'production' ? ADDRESS_PROD : ADDRESS_DEV
